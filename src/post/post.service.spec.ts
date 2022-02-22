@@ -13,13 +13,14 @@ describe('PostService', () => {
 
     update: jest.fn().mockImplementation((id, dto) => ({ id, ...dto })),
 
-    remove: jest.fn().mockImplementation((id) => ({
-      id,
+    delete: jest.fn().mockImplementation((id: number) => ({})),
+
+    remove: jest.fn().mockImplementation((id: number) => ({
       title: 'oye is handsome',
       description: 'very good lookin',
     })),
 
-    findOne: jest.fn().mockImplementation((id) => ({
+    findOne: jest.fn().mockImplementation((id: number) => ({
       id,
       title: 'oye is handsome',
       description: 'very good lookin',
@@ -93,12 +94,7 @@ describe('PostService', () => {
   });
 
   it('should delete a post record and return that', async () => {
-    expect(await service.remove(1)).toEqual({
-      id: {
-        id: 1,
-        title: 'oye is handsome',
-        description: 'very good lookin',
-      },
+    expect(await service.delete(1)).toEqual({
       title: 'oye is handsome',
       description: 'very good lookin',
     });

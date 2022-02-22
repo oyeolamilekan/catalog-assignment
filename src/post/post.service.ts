@@ -29,7 +29,7 @@ export class PostService {
     return this.postsRepository.save(post);
   }
 
-  async remove(id: number) {
+  async delete(id: number) {
     const post = await this.findOne(id)
     return this.postsRepository.remove(post);
   }

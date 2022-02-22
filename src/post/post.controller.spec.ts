@@ -12,6 +12,11 @@ describe('PostController', () => {
       };
     }),
     update: jest.fn().mockImplementation((id, dto) => ({ id, ...dto })),
+    delete: jest.fn().mockImplementation((id) => ({
+      id,
+      title: 'oye is handsome',
+      description: 'very good lookin',
+    })),
     remove: jest.fn().mockImplementation((id) => ({
       id,
       title: 'oye is handsome',
@@ -101,6 +106,6 @@ describe('PostController', () => {
       description: 'very good lookin',
     });
 
-    expect(mockPostService.remove).toHaveBeenCalled();
+    expect(mockPostService.delete).toHaveBeenCalled();
   });
 });

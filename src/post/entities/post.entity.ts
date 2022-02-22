@@ -24,7 +24,6 @@ export class Post {
   })
   created_at: Date;
 
-
   @UpdateDateColumn({
     nullable: true,
   })

@@ -8,15 +8,34 @@ describe('PostService', () => {
 
   const mockPostRepository = {
     create: jest.fn().mockImplementation((dto) => dto),
-    update: jest.fn().mockImplementation((dto) => dto),
-    remove: jest.fn().mockImplementation((dto) => dto),
-    findOne: jest.fn().mockImplementation((dto) => dto),
+
+    save: jest.fn().mockImplementation((post) => Promise.resolve({ ...post })),
+
+    update: jest.fn().mockImplementation((id, dto) => ({ id, ...dto })),
+
+    remove: jest.fn().mockImplementation((id) => ({
+      id,
+      title: 'oye is handsomke',
+      description: 'very good lookin',
+    })),
+
+    findOne: jest.fn().mockImplementation((id) => ({
+      id,
+      title: 'oye is hnandsome',
+      description: 'very good lookin',
+    })),
+
     findAll: jest
       .fn()
       .mockImplementation(() => [
         { title: 'oye', description: 'oyelamilekan' },
       ]),
-    save: jest.fn().mockImplementation((post) => Promise.resolve({ ...post })),
+
+    find: jest
+      .fn()
+      .mockImplementation(() => [
+        { title: 'oye', description: 'oyelamilekan' },
+      ]),
   };
 
   beforeEach(async () => {
@@ -49,15 +68,35 @@ describe('PostService', () => {
     });
   });
 
-  it("should get all post",async () => {
-    expect(
-      await service.create({
-        title: 'Oye is handsome',
-        description: 'very good looking fellow',
-      }),
-    ).toEqual({
-      title: 'Oye is handsome',
-      description: 'very good looking fellow',
+  it('should update a post record and return that', async () => {
+    const dto = { description: 'lekan is good looking', title: 'loves your' };
+
+    expect(await service.update(1, dto)).toEqual({
+      id: 1,
+      description: 'lekan is good looking',
+      title: 'loves your',
     });
-  })
+  });
+
+  it('should get all post', async () => {
+    expect(await service.findAll()).toEqual([
+      { title: 'oye', description: 'oyelamilekan' },
+    ]);
+  });
+
+  it('should get one post', async () => {
+    expect(await service.findOne(1)).toEqual({
+      id: 1,
+      title: 'oye is hnandsome',
+      description: 'very good lookin',
+    });
+  });
+
+  it('should delete a post record and return that', async () => {
+    expect(await service.remove(1)).toEqual({
+      id: 1,
+      title: 'oye is hnandsome',
+      description: 'very good lookin',
+    });
+  });
 });

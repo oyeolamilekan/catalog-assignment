@@ -15,13 +15,13 @@ describe('PostService', () => {
 
     remove: jest.fn().mockImplementation((id) => ({
       id,
-      title: 'oye is handsomke',
+      title: 'oye is handsome',
       description: 'very good lookin',
     })),
 
     findOne: jest.fn().mockImplementation((id) => ({
       id,
-      title: 'oye is hnandsome',
+      title: 'oye is handsome',
       description: 'very good lookin',
     })),
 
@@ -87,15 +87,19 @@ describe('PostService', () => {
   it('should get one post', async () => {
     expect(await service.findOne(1)).toEqual({
       id: 1,
-      title: 'oye is hnandsome',
+      title: 'oye is handsome',
       description: 'very good lookin',
     });
   });
 
   it('should delete a post record and return that', async () => {
     expect(await service.remove(1)).toEqual({
-      id: 1,
-      title: 'oye is hnandsome',
+      id: {
+        id: 1,
+        title: 'oye is handsome',
+        description: 'very good lookin',
+      },
+      title: 'oye is handsome',
       description: 'very good lookin',
     });
   });
